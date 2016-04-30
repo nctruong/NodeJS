@@ -1,10 +1,11 @@
 var express = require('express');
 var fs 		= require("fs");
 var app 	= express();
+var route	= express.Router();
 //----------------------------------------------------------------------------
-
+app.use("/users",route);
 // GET - HTTP Method
-app.get('/listUsers', function (req, res) {
+route.get('/listUsers', function (req, res) {
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
        console.log( data );
        res.end( data );
@@ -29,7 +30,7 @@ user = {
       "id": 4
    }
 }
-app.get('/addUser', function (req, res) {
+route.get('/addUser', function (req, res) {
    // First read existing users.
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
        data = JSON.parse( data );
@@ -40,7 +41,7 @@ app.get('/addUser', function (req, res) {
 })
 
 // GET - HTTP Method
-app.get('/:id', function (req, res) {
+route.get('/:id', function (req, res) {
    // First read existing users.
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
        users = JSON.parse( data );
@@ -51,7 +52,7 @@ app.get('/:id', function (req, res) {
 })
 
 // DELETE - HTTP Method
-app.get('/deleteUser/:id', function (req, res) {
+route.get('/deleteUser/:id', function (req, res) {
 
    // First read existing users.
    fs.readFile( __dirname + "/" + "users.json", 'utf8', function (err, data) {
